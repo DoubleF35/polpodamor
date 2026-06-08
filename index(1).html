@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polpo d'Amor — Torino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,900;1,9..144,300;1,9..144,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:        #0f0a06;
+      --parchment:  #f0e8d8;
+      --sand:       #e4d8c4;
+      --terracotta: #c44c2d;
+      --white:      #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--ink);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ──────────────────────────────── */
+    #cur {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--terracotta);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .15s, height .15s;
+      will-change: left, top;
+    }
+    #cur-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(196,76,45,.45);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, border-color .2s;
+      will-change: left, top;
+    }
+    @media (hover: none) {
+      body { cursor: auto; }
+      #cur, #cur-ring { display: none; }
+    }
+
+    /* ── Grain overlay ──────────────────────────────── */
+    #grain {
+      position: fixed; inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── Canvas ─────────────────────────────────────── */
+    #canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
+
+    /* ── Loading ─────────────────────────────────────── */
+    #loading {
+      position: fixed; inset: 0;
+      z-index: 8000;
+      background: var(--ink);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 2rem;
+      transition: opacity .9s ease;
+    }
+    #loading.hidden { opacity: 0; pointer-events: none; }
+
+    .ld-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 300; font-style: italic;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      color: var(--parchment);
+      letter-spacing: -.01em;
+      opacity: 0;
+      animation: fadeUp .9s ease .3s forwards;
+    }
+    .ld-bar { width: 100px; height: 1px; background: rgba(240,232,216,.15); overflow: hidden; }
+    .ld-fill { height: 100%; width: 0%; background: var(--terracotta); transition: width .3s ease; }
+
+    /* ── Page ────────────────────────────────────────── */
+    #page { position: relative; z-index: 2; }
+
+    /* ── Hero zone ───────────────────────────────────── */
+    #hero-zone { height: 600vh; position: relative; }
+
+    #hero {
+      position: sticky; top: 0; height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: 1fr auto;
+      padding: clamp(1.8rem, 4vw, 3.5rem);
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    .h-eyebrow {
+      grid-column: 1; grid-row: 1; align-self: start;
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem; letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,.45);
+      opacity: 0;
+      animation: fadeUp 1s ease .5s forwards;
+    }
+
+    .h-title {
+      grid-column: 1 / -1; grid-row: 1;
+      align-self: end;
+      padding-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 1.2s ease .8s forwards;
+    }
+
+    .t-line {
+      display: block;
+      font-family: 'Fraunces', serif;
+      line-height: .84;
+      color: var(--white);
+      text-shadow: 0 6px 80px rgba(0,0,0,.5);
+    }
+    .t-polpo {
+      font-size: clamp(4.5rem, 17vw, 15.5rem);
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+    .t-damor {
+      font-size: clamp(3.5rem, 13vw, 12rem);
+      font-weight: 300; font-style: italic;
+      letter-spacing: -.03em;
+      padding-left: 6.5vw;
+      color: rgba(255,255,255,.85);
+    }
+
+    .h-meta {
+      grid-column: 1; grid-row: 2;
+      display: flex; align-items: center; gap: 1.5rem;
+      padding-top: 1.1rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+    .h-rule { flex: 0 0 80px; height: 1px; background: rgba(240,232,216,.3); }
+    .h-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem; letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,.45);
+    }
+
+    /* ── Rotating scroll badge ───────────────────────── */
+    .scroll-badge {
+      grid-column: 2; grid-row: 1 / 3;
+      align-self: end; justify-self: end;
+      width: 86px; height: 86px;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.8s forwards;
+    }
+    .scroll-badge svg {
+      width: 100%; height: 100%;
+      animation: spin 16s linear infinite;
+      overflow: visible;
+    }
+    .scroll-badge svg text {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      fill: rgba(240,232,216,.5);
+      letter-spacing: .8px;
+    }
+    .scroll-arr {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(240,232,216,.65);
+      font-size: .95rem;
+      animation: bob 2.5s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes bob {
+      0%,100% { transform: translateY(-3px); }
+      50%     { transform: translateY(3px); }
+    }
+
+    /* ── Content (parchment world) ───────────────────── */
+    #content { position: relative; background: var(--parchment); }
+
+    /* Fade from dark video → parchment */
+    #bridge {
+      height: 160px;
+      margin-top: -160px;
+      background: linear-gradient(to bottom, transparent, var(--parchment));
+      position: relative; z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ── Sections ────────────────────────────────────── */
+    .section {
+      padding: 6rem clamp(2rem, 7vw, 8rem);
+      border-top: 1px solid rgba(15,10,6,.1);
+    }
+
+    .s-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: min-content 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+    }
+
+    .s-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(4rem, 9vw, 8rem);
+      color: var(--terracotta);
+      line-height: 1; letter-spacing: -.05em;
+      opacity: .65;
+      padding-top: .2rem;
+      user-select: none;
+    }
+
+    .s-label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem; letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+    }
+
+    .s-heading {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      line-height: 1.05; letter-spacing: -.025em;
+      color: var(--ink);
+      margin-bottom: 1.8rem;
+    }
+    .s-heading em { font-style: italic; font-weight: 300; }
+
+    .s-body {
+      font-size: .97rem; line-height: 1.9;
+      color: rgba(15,10,6,.58);
+      max-width: 500px;
+    }
+
+    /* ── Dish list ───────────────────────────────────── */
+    .dish-list { margin-top: .5rem; }
+
+    .dish {
+      padding: 1.6rem 0;
+      border-bottom: 1px solid rgba(15,10,6,.08);
+    }
+    .dish:first-child { border-top: 1px solid rgba(15,10,6,.08); }
+
+    .dish-top {
+      display: flex; align-items: baseline; gap: .8rem;
+      margin-bottom: .45rem;
+    }
+    .dish-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 700; font-size: 1.35rem;
+      letter-spacing: -.01em; color: var(--ink);
+      flex-shrink: 0;
+    }
+    .dish-dots {
+      flex: 1; border-bottom: 1px dotted rgba(15,10,6,.2);
+      margin-bottom: .3rem; min-width: 20px;
+    }
+    .dish-price {
+      font-family: 'DM Mono', monospace;
+      font-size: .82rem; color: var(--terracotta);
+      flex-shrink: 0;
+    }
+    .dish-desc {
+      font-size: .8rem; line-height: 1.72;
+      color: rgba(15,10,6,.48); font-style: italic;
+    }
+
+    /* ── CTA block ───────────────────────────────────── */
+    .cta {
+      background: var(--terracotta);
+      padding: 6rem clamp(2rem, 7vw, 8rem);
+      position: relative; overflow: hidden;
+    }
+    .cta::after {
+      content: '03';
+      position: absolute; right: -.01em; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Fraunces', serif; font-weight: 900;
+      font-size: clamp(10rem, 28vw, 24rem);
+      color: rgba(255,255,255,.07);
+      line-height: 1; letter-spacing: -.05em;
+      pointer-events: none; user-select: none;
+    }
+
+    .cta-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 1; }
+
+    .cta-label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem; letter-spacing: .38em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 1.4rem;
+    }
+
+    .cta-heading {
+      font-family: 'Fraunces', serif; font-weight: 900;
+      font-size: clamp(2.8rem, 8vw, 7rem);
+      line-height: .95; letter-spacing: -.04em;
+      color: #fff; margin-bottom: 2.5rem;
+    }
+    .cta-heading em { font-style: italic; font-weight: 300; display: block; }
+
+    .cta-link {
+      display: inline-flex; align-items: center; gap: 1.2rem;
+      text-decoration: none; color: #fff;
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      font-weight: 300; font-style: italic;
+      border-bottom: 1px solid rgba(255,255,255,.4);
+      padding-bottom: .25rem;
+      transition: border-color .3s, gap .3s;
+    }
+    .cta-link:hover { border-color: #fff; gap: 2rem; }
+    .cta-link::after { content: '→'; font-style: normal; font-size: .7em; opacity: .7; }
+
+    /* ── Info strip ──────────────────────────────────── */
+    .info-strip {
+      background: var(--sand);
+      padding: 3rem clamp(2rem, 7vw, 8rem);
+      border-top: 1px solid rgba(15,10,6,.08);
+    }
+    .info-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: 3.5rem;
+    }
+    .info-label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: .55rem; letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: .5rem;
+    }
+    .info-val {
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem; color: var(--ink);
+    }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      padding: 1.8rem clamp(2rem, 7vw, 8rem);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .f-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 300; font-style: italic;
+      font-size: .95rem; color: rgba(240,232,216,.3);
+    }
+    .f-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: .55rem; letter-spacing: .15em;
+      color: rgba(240,232,216,.15);
+    }
+
+    /* ── Responsive adjustments ──────────────────────── */
+    @media (max-width: 640px) {
+      .s-inner { grid-template-columns: 1fr; gap: 1rem; }
+      .s-num { font-size: 3rem; }
+      .scroll-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cur"></div>
+  <div id="cur-ring"></div>
+  <div id="grain" aria-hidden="true"></div>
+  <canvas id="canvas"></canvas>
+
+  <!-- Loading -->
+  <div id="loading">
+    <p class="ld-name">Polpo d'Amor</p>
+    <div class="ld-bar"><div class="ld-fill" id="loadbar"></div></div>
+  </div>
+
+  <div id="page">
+
+    <!-- Hero / animation zone -->
+    <div id="hero-zone">
+      <div id="hero">
+        <p class="h-eyebrow">N 45°04′ E 7°40′ &nbsp;—&nbsp; Torino</p>
+        <h1 class="h-title">
+          <span class="t-line t-polpo">POLPO</span>
+          <span class="t-line t-damor">D'AMOR</span>
+        </h1>
+        <div class="h-meta">
+          <div class="h-rule"></div>
+          <span class="h-sub">Ristorante Rustico &nbsp;·&nbsp; Dal 2018</span>
+        </div>
+        <div class="scroll-badge" aria-hidden="true">
+          <svg viewBox="0 0 100 100">
+            <path id="cp" d="M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0" fill="none"/>
+            <text><textPath href="#cp" startOffset="0%">SCORRI · SCOPRI · GUSTA · RISERVA · </textPath></text>
+          </svg>
+          <div class="scroll-arr">↓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parchment content world -->
+    <div id="content">
+      <div id="bridge"></div>
+
+      <!-- 01 — Storia -->
+      <section class="section">
+        <div class="s-inner">
+          <div class="s-num">01</div>
+          <div>
+            <span class="s-label">La Nostra Storia</span>
+            <h2 class="s-heading">Sapori autentici<br><em>dal cuore del Piemonte</em></h2>
+            <p class="s-body">
+              Polpo d'Amor nasce dall'amore per la cucina genuina, dove i sapori del territorio piemontese si intrecciano con i profumi del mare. Una storia di passione, tradizione e ricerca continua della qualità — ogni piatto racconta un territorio.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 — Menu -->
+      <section class="section">
+        <div class="s-inner">
+          <div class="s-num">02</div>
+          <div>
+            <span class="s-label">In Evidenza</span>
+            <h2 class="s-heading">I Nostri<br><em>Piatti</em></h2>
+            <div class="dish-list">
+              <div class="dish">
+                <div class="dish-top">
+                  <span class="dish-name">Polpo alla Brace</span>
+                  <span class="dish-dots"></span>
+                  <span class="dish-price">€ 22</span>
+                </div>
+                <p class="dish-desc">Polpo verace grigliato, crema di patate affumicata, olio al prezzemolo e limone bruciato.</p>
+              </div>
+              <div class="dish">
+                <div class="dish-top">
+                  <span class="dish-name">Tajarin al Tartufo</span>
+                  <span class="dish-dots"></span>
+                  <span class="dish-price">€ 18</span>
+                </div>
+                <p class="dish-desc">Pasta fresca tirata a mano, burro d'alpeggio e tartufo nero delle Langhe stagionale.</p>
+              </div>
+              <div class="dish">
+                <div class="dish-top">
+                  <span class="dish-name">Vitello Tonnato</span>
+                  <span class="dish-dots"></span>
+                  <span class="dish-price">€ 16</span>
+                </div>
+                <p class="dish-desc">Ricetta della tradizione piemontese, vitello rosa, salsa tonnata fatta in casa, capperi.</p>
+              </div>
+              <div class="dish">
+                <div class="dish-top">
+                  <span class="dish-name">Risotto al Barolo</span>
+                  <span class="dish-dots"></span>
+                  <span class="dish-price">€ 19</span>
+                </div>
+                <p class="dish-desc">Riso Carnaroli mantecato con Barolo DOCG, midollo di bue e Parmigiano 24 mesi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 — CTA -->
+      <div class="cta">
+        <div class="cta-inner">
+          <span class="cta-label">Prenota il tuo tavolo</span>
+          <h2 class="cta-heading">Vieni a<br><em>Trovarci</em></h2>
+          <a href="tel:+390113456789" class="cta-link">+39 011 345 6789</a>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="info-strip">
+        <div class="info-inner">
+          <div>
+            <span class="info-label">Dove</span>
+            <p class="info-val">Via Roma 42, Torino</p>
+          </div>
+          <div>
+            <span class="info-label">Orari</span>
+            <p class="info-val">Mar – Dom &nbsp;·&nbsp; 12:30 – 23:00</p>
+          </div>
+          <div>
+            <span class="info-label">Telefono</span>
+            <p class="info-val">+39 011 345 6789</p>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <span class="f-name">Polpo d'Amor</span>
+        <span class="f-copy">© 2025 · Torino · P.IVA 12345678901</span>
+      </footer>
+    </div>
+  </div>
+
+  <script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+
+    /* ── Custom cursor ─────────────────────────────── */
+    const cur = document.getElementById('cur');
+    const curR = document.getElementById('cur-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function tick() {
+      rx += (mx - rx) * .13; ry += (my - ry) * .13;
+      cur.style.cssText  += `left:${mx}px;top:${my}px`;
+      curR.style.cssText += `left:${rx}px;top:${ry}px`;
+      requestAnimationFrame(tick);
+    })();
+    document.querySelectorAll('a').forEach(a => {
+      a.addEventListener('mouseenter', () => { curR.style.width = curR.style.height = '56px'; curR.style.borderColor = 'rgba(196,76,45,.8)'; });
+      a.addEventListener('mouseleave', () => { curR.style.width = curR.style.height = '36px'; curR.style.borderColor = 'rgba(196,76,45,.45)'; });
+    });
+
+    /* ── Three.js renderer ─────────────────────────── */
+    const canvas   = document.getElementById('canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setSize(innerWidth, innerHeight);
+
+    const scene  = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+    /* ── Video ─────────────────────────────────────── */
+    const video = document.createElement('video');
+    video.src = 'animation.mp4';
+    video.muted = true; video.playsInline = true;
+    video.preload = 'auto'; video.loop = false;
+
+    const tex = new THREE.VideoTexture(video);
+    tex.minFilter = tex.magFilter = THREE.LinearFilter;
+    tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
+
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(2, 2),
+      new THREE.MeshBasicMaterial({ map: tex, transparent: true })
+    );
+    scene.add(mesh);
+
+    /* ── Cover UV ──────────────────────────────────── */
+    function cover() {
+      if (!video.videoWidth) return;
+      const vA = video.videoWidth / video.videoHeight;
+      const sA = innerWidth / innerHeight;
+      if (sA > vA) {
+        const s = vA / sA; tex.repeat.set(1, s); tex.offset.set(0, (1-s)/2);
+      } else {
+        const s = sA / vA; tex.repeat.set(s, 1); tex.offset.set((1-s)/2, 0);
+      }
+    }
+
+    /* ── Loading ───────────────────────────────────── */
+    const bar = document.getElementById('loadbar');
+    const ld  = document.getElementById('loading');
+    video.addEventListener('progress', () => {
+      if (video.buffered.length && video.duration)
+        bar.style.width = Math.min(video.buffered.end(0)/video.duration*100, 100)+'%';
+    });
+    const hide = () => { bar.style.width='100%'; setTimeout(()=>ld.classList.add('hidden'),500); };
+    video.addEventListener('canplaythrough', hide);
+    setTimeout(hide, 4000);
+    video.addEventListener('loadedmetadata', () => { cover(); video.currentTime = 0; });
+    video.load();
+
+    /* ── Scroll → video time ───────────────────────── */
+    let target = 0, seeking = false, pending = false;
+    const seek = () => { video.currentTime = target; seeking = true; };
+    const reqSeek = () => { if (seeking) { pending=true; return; } seek(); };
+    video.addEventListener('seeked', () => {
+      tex.needsUpdate = true; seeking = false;
+      if (pending) { pending=false; seek(); }
+    });
+
+    let last = -1;
+    window.addEventListener('scroll', () => {
+      target = Math.min(Math.max(scrollY / (5*innerHeight), 0), 1) * (video.duration||5.06);
+      document.getElementById('hero').style.opacity = Math.max(0, 1 - scrollY/(innerHeight*.35));
+    }, { passive: true });
+
+    window.addEventListener('resize', () => { renderer.setSize(innerWidth,innerHeight); cover(); });
+
+    /* ── Render loop ───────────────────────────────── */
+    (function loop() {
+      requestAnimationFrame(loop);
+      if (Math.abs(target-last) > .015) { last=target; reqSeek(); }
+      if (video.readyState >= 2) tex.needsUpdate = true;
+      renderer.render(scene, camera);
+    })();
+  </script>
+</body>
+</html>
