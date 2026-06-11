@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="it" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polpo d'Amor — Osteria a Torino · Mare &amp; Langhe</title>
+  <meta name="description" content="Polpo d'Amor è l'osteria di San Salvario, Torino, dove il mare incontra le Langhe: polpo verace, patate di montagna e vini di collina. Prenota il tuo tavolo." />
+  <meta name="theme-color" content="#051212" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <meta property="og:type" content="restaurant" />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:title" content="Polpo d'Amor — Osteria a Torino" />
+  <meta property="og:description" content="Il mare incontra le Langhe. Polpo verace, patate di montagna, vini di collina. San Salvario, Torino." />
+
+  <link rel="preload" href="assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/playfair-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script>
+    document.documentElement.classList.replace('no-js', 'js');
+    // Rete di sicurezza: se il bundle non parte, la pagina resta comunque visibile.
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        document.getElementById('loader').classList.add('done');
+        document.body.classList.add('is-loaded');
+      }, 4000);
+    });
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Polpo d'Amor",
+    "servesCuisine": ["Piemontese", "Pesce"],
+    "priceRange": "€€",
+    "telephone": "+39 011 765 43 21",
+    "email": "ciao@polpodamor.it",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Via Saluzzo 29/F",
+      "addressLocality": "Torino",
+      "postalCode": "10125",
+      "addressCountry": "IT"
+    },
+    "openingHours": ["Tu-Sa 19:00-23:30", "Su 12:30-15:00"]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ════ Polpo: simbolo per il watermark ════ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="sym-octopus" viewBox="0 0 200 140">
+      <path fill="#D5402E" d="M100 8c24 0 40 18 40 42 0 18-10 30-24 35H84c-14-5-24-17-24-35 0-24 16-42 40-42Z"/>
+      <g fill="none" stroke="#D5402E" stroke-linecap="round">
+        <path stroke-width="11" d="M70 78C56 90 44 96 36 90c-6-5-2-14 6-12 4 1 4 6 0 7"/>
+        <path stroke-width="11" d="M130 78c14 12 26 18 34 12 6-5 2-14-6-12-4 1-4 6 0 7"/>
+        <path stroke-width="10" d="M84 84c-4 14-12 22-22 20-7-2-6-11 1-10"/>
+        <path stroke-width="10" d="M116 84c4 14 12 22 22 20 7-2 6-11-1-10"/>
+        <path stroke-width="10" d="M100 86c1 10-1 16 0 22"/>
+      </g>
+      <ellipse cx="86" cy="52" rx="9.5" ry="11" fill="#F5F1F1"/>
+      <ellipse cx="114" cy="52" rx="9.5" ry="11" fill="#F5F1F1"/>
+      <circle cx="86" cy="56" r="4.2" fill="#20272B"/>
+      <circle cx="114" cy="56" r="4.2" fill="#20272B"/>
+    </symbol>
+  </svg>
+
+  <!-- ════ Preloader ════ -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <img class="loader__roundel" src="assets/logo.svg" alt="" />
+      <p class="loader__name">Polpo <em>d'Amor</em></p>
+      <p class="loader__sub">Osteria — Torino</p>
+      <div class="loader__bar"><span></span></div>
+    </div>
+  </div>
+
+  <!-- ════ Grana pellicola ════ -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ════ Cursore custom (solo desktop) ════ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+  </div>
+
+  <!-- ════ Header ════ -->
+  <header class="hdr" id="hdr">
+    <a class="hdr__brand" href="#top" aria-label="Polpo d'Amor — torna su">
+      <img class="hdr__roundel" src="assets/logo.svg" alt="" />
+      <span class="hdr__word">
+        <span class="hdr__name">Polpo <em>d'Amor</em></span>
+        <span class="hdr__tag">Osteria — Torino</span>
+      </span>
+    </a>
+
+    <nav class="hdr__nav" aria-label="Navigazione principale">
+      <a href="#esperienza">La firma</a>
+      <a href="#storia">La storia</a>
+      <a href="#menu">Il menù</a>
+      <a href="#dove">Dove siamo</a>
+      <a href="#contatti">Contatti</a>
+    </nav>
+
+    <div class="hdr__cta">
+      <a href="#contatti" class="btn btn--red btn--magnetic">Prenota un tavolo</a>
+      <button class="burger" id="burger" aria-label="Apri il menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ════ Menu overlay mobile ════ -->
+  <div class="moverlay" id="moverlay" aria-hidden="true">
+    <nav class="moverlay__nav" aria-label="Menu">
+      <a href="#esperienza" style="--i:0">La firma</a>
+      <a href="#storia" style="--i:1">La storia</a>
+      <a href="#menu" style="--i:2">Il menù</a>
+      <a href="#dove" style="--i:3">Dove siamo</a>
+      <a href="#contatti" style="--i:4">Contatti</a>
+      <a href="#contatti" class="moverlay__book" style="--i:5">Prenota un tavolo ✺</a>
+    </nav>
+    <div class="moverlay__foot">
+      <p>Via Saluzzo 29/F — San Salvario, Torino</p>
+      <p><a href="tel:+390117654321">+39 011 765 43 21</a></p>
+    </div>
+  </div>
+
+  <!-- ════ Scena 3D (fissa, dietro hero + esperienza) ════ -->
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <main id="top">
+
+    <!-- ════ Hero ════ -->
+    <section class="hero">
+      <div class="hero__content">
+        <p class="eyebrow" data-intro style="--d:.05s"><span class="eyebrow__star">✺</span> Osteria — San Salvario, Torino</p>
+        <h1 class="hero__title">
+          <span class="hero__l1" data-intro style="--d:.15s">Polpo</span>
+          <span class="hero__l2" data-intro style="--d:.3s">d'Amor</span>
+        </h1>
+        <p class="hero__lede" data-intro style="--d:.45s">Il mare incontra le Langhe: polpo verace, patate di montagna e vini di collina, in dodici tavoli che profumano di casa.</p>
+        <div class="hero__cta" data-intro style="--d:.6s">
+          <a href="#contatti" class="btn btn--red btn--magnetic">Prenota un tavolo</a>
+          <a href="#menu" class="btn btn--ghost btn--magnetic">Scopri il menù</a>
+        </div>
+      </div>
+      <div class="hero__cue" data-intro style="--d:.9s">
+        <span>Scorri — il piatto si compone</span>
+        <i class="hero__cueline"></i>
+      </div>
+    </section>
+
+    <!-- ════ Esperienza 3D: il piatto si compone ════ -->
+    <section class="exp" id="esperienza" aria-label="Polpo e Patate d'Amor: il piatto della casa, composto passo dopo passo">
+      <div class="exp__stage">
+        <img class="exp__still" src="assets/piatto-still.jpg" alt="Polpo e Patate d'Amor: tentacoli alla brace su patate dorate" />
+        <div class="exp__ghost" aria-hidden="true">01</div>
+
+        <div class="exp__caps">
+          <div class="exp__cap" data-from="0.10" data-to="0.40">
+            <span class="exp__step">01 — La base</span>
+            <h3>Patate di Entracque</h3>
+            <p>Cotte nel burro di malga, schiacciate al coltello.</p>
+          </div>
+          <div class="exp__cap" data-from="0.40" data-to="0.62">
+            <span class="exp__step">02 — Il protagonista</span>
+            <h3>Polpo verace</h3>
+            <p>Quattro ore di dolcezza, poi un passaggio in brace.</p>
+          </div>
+          <div class="exp__cap" data-from="0.62" data-to="0.82">
+            <span class="exp__step">03 — Gli aromi</span>
+            <h3>Paprika affumicata &amp; prezzemolo</h3>
+            <p>Il tocco che fa innamorare.</p>
+          </div>
+        </div>
+
+        <ol class="exp__rail" aria-hidden="true">
+          <li data-step="0">La base</li>
+          <li data-step="1">Il polpo</li>
+          <li data-step="2">Gli aromi</li>
+          <li data-step="3">In tavola</li>
+        </ol>
+
+        <div class="exp__final" data-from="0.84">
+          <p class="eyebrow eyebrow--light"><span class="eyebrow__star">✺</span> La firma della casa</p>
+          <h2>Polpo e Patate <em>d'Amor</em></h2>
+          <p class="exp__price">Dal 2018, il piatto che ci dà il nome — € 18</p>
+          <a href="#menu" class="btn btn--ink btn--magnetic">Tutto il menù</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ Mondo dei contenuti ════ -->
+    <div class="world">
+
+      <!-- Marquee -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>Polpo d'Amor ✺ Osteria a Torino ✺ Mare &amp; Langhe ✺ Dal 2018 ✺ Polpo d'Amor ✺ Osteria a Torino ✺ Mare &amp; Langhe ✺ Dal 2018 ✺&nbsp;</span><span>Polpo d'Amor ✺ Osteria a Torino ✺ Mare &amp; Langhe ✺ Dal 2018 ✺ Polpo d'Amor ✺ Osteria a Torino ✺ Mare &amp; Langhe ✺ Dal 2018 ✺&nbsp;</span>
+        </div>
+      </div>
+
+      <!-- La storia -->
+      <section class="storia" id="storia">
+        <svg class="storia__mark" viewBox="0 0 200 140" aria-hidden="true"><use href="#sym-octopus" width="200" height="140"/></svg>
+        <div class="storia__inner">
+          <div class="storia__head">
+            <p class="eyebrow eyebrow--light" data-reveal><span class="eyebrow__star">✺</span> La nostra storia</p>
+            <h2 data-reveal>Una storia d'amore<br /><em>tra mare e collina</em></h2>
+          </div>
+          <div class="storia__body">
+            <p data-reveal>Lui pescava polpi a Camogli, lei impastava plin nelle Langhe. Si sono incontrati al mercato di Porta Palazzo, davanti a una cassetta di patate di montagna — e da quell'incontro, nel 2018, è nata un'osteria.</p>
+            <p data-reveal>Da allora cuciniamo come si fa nelle case che amiamo: pochi piatti, materia prima testarda, vino versato generoso. Il polpo arriva dal Mar Ligure due volte a settimana; tutto il resto, dal Piemonte che abbiamo intorno.</p>
+            <div class="storia__stats">
+              <div data-reveal style="--d:.0s"><strong>2018</strong><span>l'anno del primo servizio</span></div>
+              <div data-reveal style="--d:.08s"><strong>12</strong><span>tavoli, una sola sala</span></div>
+              <div data-reveal style="--d:.16s"><strong>120+</strong><span>etichette di Langa e Roero</span></div>
+              <div data-reveal style="--d:.24s"><strong>1</strong><span>polpo, mille modi d'amarlo</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Il menù -->
+      <section class="menu" id="menu">
+        <div class="menu__inner">
+          <div class="menu__head">
+            <p class="eyebrow" data-reveal><span class="eyebrow__star">✺</span> Il menù</p>
+            <h2 data-reveal>Quello che il mercato<br /><em>ci suggerisce</em></h2>
+            <p class="menu__note" data-reveal>Il menù cambia ogni settimana, secondo il banco di Porta Palazzo e l'umore del polpo. Questi sono i classici che non ci lasciano mai.</p>
+          </div>
+
+          <div class="menu__grid">
+            <div class="menu__cat" data-reveal>
+              <h3>Antipasti</h3>
+              <div class="dish dish--firma">
+                <div class="dish__top"><span class="dish__name">Polpo e Patate d'Amor <i class="dish__badge">la firma</i></span><span class="dish__dots"></span><span class="dish__price">18</span></div>
+                <p class="dish__desc">Polpo verace, patate di Entracque, olio al prezzemolo, perle di Barbera.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Vitello tonnato come una volta</span><span class="dish__dots"></span><span class="dish__price">14</span></div>
+                <p class="dish__desc">Girello rosa, salsa tonnata montata a mano, capperi di Pantelleria.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Carpaccio di polpo e Tonda Gentile</span><span class="dish__dots"></span><span class="dish__price">15</span></div>
+                <p class="dish__desc">Pressato al torchio, nocciole tostate, misticanza amara.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Acciughe al verde</span><span class="dish__dots"></span><span class="dish__price">11</span></div>
+                <p class="dish__desc">Come da tradizione piemontese, con bagnetto di prezzemolo e aglio dolce.</p>
+              </div>
+            </div>
+
+            <div class="menu__cat" data-reveal style="--d:.1s">
+              <h3>Primi</h3>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Tajarin 30 tuorli al ragù di polpo</span><span class="dish__dots"></span><span class="dish__price">16</span></div>
+                <p class="dish__desc">Ragù bianco di polpo, limone di Liguria, pepe timut.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Agnolotti del plin</span><span class="dish__dots"></span><span class="dish__price">15</span></div>
+                <p class="dish__desc">I tre arrosti, burro di malga e salvia del balcone.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Risotto Carnaroli al Barbera</span><span class="dish__dots"></span><span class="dish__price">17</span></div>
+                <p class="dish__desc">Mantecato all'olio, polvere di polpo croccante.</p>
+              </div>
+            </div>
+
+            <div class="menu__cat" data-reveal>
+              <h3>Secondi</h3>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Tentacolo alla brace</span><span class="dish__dots"></span><span class="dish__price">23</span></div>
+                <p class="dish__desc">Crema di patate affumicata, limone bruciato, olio nuovo.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Brasato al Nebbiolo</span><span class="dish__dots"></span><span class="dish__price">24</span></div>
+                <p class="dish__desc">Cottura di dodici ore, polenta otto file del mulino Marino.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Il pescato del giorno</span><span class="dish__dots"></span><span class="dish__price">22</span></div>
+                <p class="dish__desc">Dal banco del mercato, alla brace o all'acqua pazza.</p>
+              </div>
+            </div>
+
+            <div class="menu__cat" data-reveal style="--d:.1s">
+              <h3>Dolci</h3>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Bonet della tradizione</span><span class="dish__dots"></span><span class="dish__price">8</span></div>
+                <p class="dish__desc">Amaretti, cacao e caramello scuro, come in Langa.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Panna cotta ai fiori di lavanda</span><span class="dish__dots"></span><span class="dish__price">8</span></div>
+                <p class="dish__desc">Panna di alpeggio, miele di castagno, sablé al sale.</p>
+              </div>
+              <div class="dish">
+                <div class="dish__top"><span class="dish__name">Gianduia in tre consistenze</span><span class="dish__dots"></span><span class="dish__price">9</span></div>
+                <p class="dish__desc">Cremoso, croccante di nocciole, fior di sale.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu__degust" data-reveal>
+            <span class="menu__degust-badge">Il preferito ✺</span>
+            <div class="menu__degust-txt">
+              <h3>Menù dell'Amor</h3>
+              <p>Cinque portate per innamorarsi piano: la firma, due assaggi di mare, un primo di Langa e il dolce del giorno.</p>
+            </div>
+            <div class="menu__degust-price">
+              <strong>€ 48</strong>
+              <span>+ € 22 abbinamento vini</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Citazione -->
+      <section class="quote">
+        <p data-reveal>«Si sente l'amore, piatto dopo piatto. <em>Il polpo più tenero</em> a duecento chilometri dal mare.»</p>
+        <span class="quote__by" data-reveal>— gli ospiti di San Salvario</span>
+      </section>
+
+      <!-- Dove siamo + recensioni -->
+      <section class="dove" id="dove">
+        <div class="dove__inner">
+          <div class="dove__head">
+            <p class="eyebrow" data-reveal><span class="eyebrow__star">✺</span> Dove siamo</p>
+            <h2 data-reveal>Vienici a trovare<br /><em>a San Salvario</em></h2>
+            <p class="dove__note" data-reveal>Via Saluzzo 29/F, a due passi dal Parco del Valentino. Metro Marconi, poi tre minuti a piedi seguendo il profumo.</p>
+          </div>
+
+          <div class="dove__grid">
+            <div class="dove__map" data-reveal>
+              <iframe
+                title="Polpo d'Amor su Google Maps — Via Saluzzo 29/F, Torino"
+                src="https://maps.google.com/maps?q=Via%20Saluzzo%2029%2C%2010125%20Torino&z=16&output=embed"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <a class="dove__directions" href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+Saluzzo+29%2C+10125+Torino" target="_blank" rel="noopener">Indicazioni stradali ↗</a>
+            </div>
+
+            <div class="dove__reviews">
+              <div class="dove__score" data-reveal>
+                <strong>4,9</strong>
+                <div>
+                  <span class="stars" aria-label="5 stelle su 5">★★★★★</span>
+                  <p>su Google · 214 recensioni</p>
+                </div>
+              </div>
+
+              <article class="review" data-reveal>
+                <header>
+                  <i class="review__avatar" style="--c: var(--teal-500)">G</i>
+                  <div><strong>Giulia M.</strong><span>2 settimane fa</span></div>
+                  <span class="stars" aria-label="5 stelle">★★★★★</span>
+                </header>
+                <p>«Il polpo si taglia con la forchetta. Atmosfera da casa di amici e vini scelti benissimo: il piatto che dà il nome al locale vale da solo il viaggio.»</p>
+              </article>
+
+              <article class="review" data-reveal style="--d:.08s">
+                <header>
+                  <i class="review__avatar" style="--c: var(--red-500)">M</i>
+                  <div><strong>Marco T.</strong><span>1 mese fa</span></div>
+                  <span class="stars" aria-label="5 stelle">★★★★★</span>
+                </header>
+                <p>«Prenotate: dodici tavoli e si riempiono in fretta. Tajarin al ragù di polpo indimenticabili, servizio che ti fa sentire a casa.»</p>
+              </article>
+
+              <article class="review" data-reveal style="--d:.16s">
+                <header>
+                  <i class="review__avatar" style="--c: var(--rose-500)">S</i>
+                  <div><strong>Sara P.</strong><span>2 mesi fa</span></div>
+                  <span class="stars" aria-label="5 stelle">★★★★★</span>
+                </header>
+                <p>«La sorpresa di San Salvario: mare e Langhe nello stesso menù senza stonare. Bonet finale perfetto, torneremo presto.»</p>
+              </article>
+
+              <a class="dove__all" href="https://www.google.com/maps/search/?api=1&amp;query=Polpo+d%27Amor+Osteria+Torino" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1Z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.84 14.1A6.6 6.6 0 0 1 5.5 12c0-.73.13-1.44.34-2.1V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84Z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15A11 11 0 0 0 2.18 7.06L5.84 9.9C6.71 7.31 9.14 5.38 12 5.38Z"/></svg>
+                Leggi tutte le recensioni su Google
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contatti / prenota -->
+      <section class="contact" id="contatti">
+        <div class="contact__inner">
+          <div class="contact__info">
+            <p class="eyebrow eyebrow--light" data-reveal><span class="eyebrow__star">✺</span> Contatti</p>
+            <h2 data-reveal>Prenota<br /><em>il tuo tavolo</em></h2>
+            <dl>
+              <div data-reveal><dt>Indirizzo</dt><dd>Via Saluzzo 29/F — 10125 Torino<br />San Salvario, a due passi dal Valentino</dd></div>
+              <div data-reveal><dt>Orari</dt><dd>Mar – Sab · 19:00 – 23:30<br />Domenica · 12:30 – 15:00<br />Lunedì riposo — anche il polpo</dd></div>
+              <div data-reveal><dt>Telefono</dt><dd><a href="tel:+390117654321">+39 011 765 43 21</a></dd></div>
+              <div data-reveal><dt>Scrivici</dt><dd><a href="mailto:ciao@polpodamor.it">ciao@polpodamor.it</a><br /><a href="https://instagram.com" target="_blank" rel="noopener">@polpodamor</a></dd></div>
+            </dl>
+          </div>
+
+          <form class="contact__form" id="bookform" data-reveal novalidate>
+            <div class="field"><label for="f-nome">Nome e cognome</label><input id="f-nome" name="nome" type="text" autocomplete="name" required placeholder="Maria Rossi" /></div>
+            <div class="field"><label for="f-tel">Telefono o email</label><input id="f-tel" name="contatto" type="text" autocomplete="tel" required placeholder="+39 ..." /></div>
+            <div class="field-row">
+              <div class="field"><label for="f-ospiti">Ospiti</label><select id="f-ospiti" name="ospiti"><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7+</option></select></div>
+              <div class="field"><label for="f-data">Data</label><input id="f-data" name="data" type="date" /></div>
+              <div class="field"><label for="f-ora">Ora</label><select id="f-ora" name="ora"><option>19:00</option><option>19:30</option><option>20:00</option><option selected>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option></select></div>
+            </div>
+            <div class="field"><label for="f-note">Note (allergie, occasioni, amori da festeggiare)</label><textarea id="f-note" name="note" rows="3" placeholder="Scrivici tutto…"></textarea></div>
+            <button type="submit" class="btn btn--red btn--big btn--magnetic">Invia la richiesta</button>
+            <p class="contact__micro">Confermiamo entro un'ora, a voce. Come si faceva una volta.</p>
+            <div class="contact__ok" aria-live="polite">
+              <strong>Richiesta inviata ✺</strong>
+              <span>Grazie! Vi richiamiamo a brevissimo per confermare. A presto.</span>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="foot">
+        <p class="foot__giant" aria-hidden="true">Polpo d'Amor</p>
+        <div class="foot__grid">
+          <div class="foot__brand">
+            <img class="foot__roundel" src="assets/logo.svg" alt="Polpo d'Amor — Osteria" />
+            <p>Osteria di mare e di collina<br />San Salvario, Torino</p>
+          </div>
+          <nav class="foot__col" aria-label="Esplora">
+            <h4>Esplora</h4>
+            <a href="#esperienza">La firma</a>
+            <a href="#storia">La storia</a>
+            <a href="#menu">Il menù</a>
+            <a href="#dove">Dove siamo</a>
+            <a href="#contatti">Prenota</a>
+          </nav>
+          <div class="foot__col">
+            <h4>Contatti</h4>
+            <a href="tel:+390117654321">+39 011 765 43 21</a>
+            <a href="mailto:ciao@polpodamor.it">ciao@polpodamor.it</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+          </div>
+          <div class="foot__col">
+            <h4>Orari</h4>
+            <span>Mar – Sab · 19:00 – 23:30</span>
+            <span>Domenica · 12:30 – 15:00</span>
+            <span>Lunedì riposo</span>
+          </div>
+        </div>
+        <div class="foot__bar">
+          <span>© <span id="year">2026</span> Polpo d'Amor · P.IVA 12345678901</span>
+          <span>Fatto con amore (e patate) a Torino</span>
+          <a href="#top" class="foot__top">Torna su ↑</a>
+        </div>
+      </footer>
+
+    </div><!-- /world -->
+  </main>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
