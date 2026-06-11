@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="98" fill="#EDE5D2"/>
+  <g transform="translate(20 32) scale(.8)">
+    <path fill="#D5402E" d="M100 8c24 0 40 18 40 42 0 18-10 30-24 35H84c-14-5-24-17-24-35 0-24 16-42 40-42Z"/>
+    <g fill="none" stroke="#D5402E" stroke-linecap="round">
+      <path stroke-width="11" d="M70 78C56 90 44 96 36 90c-6-5-2-14 6-12 4 1 4 6 0 7"/>
+      <path stroke-width="11" d="M130 78c14 12 26 18 34 12 6-5 2-14-6-12-4 1-4 6 0 7"/>
+      <path stroke-width="10" d="M84 84c-4 14-12 22-22 20-7-2-6-11 1-10"/>
+      <path stroke-width="10" d="M116 84c4 14 12 22 22 20 7-2 6-11-1-10"/>
+      <path stroke-width="10" d="M100 86c1 10-1 16 0 22"/>
+    </g>
+    <ellipse cx="86" cy="52" rx="9.5" ry="11" fill="#F5F1F1"/>
+    <ellipse cx="114" cy="52" rx="9.5" ry="11" fill="#F5F1F1"/>
+    <circle cx="86" cy="56" r="4.2" fill="#20272B"/>
+    <circle cx="114" cy="56" r="4.2" fill="#20272B"/>
+  </g>
+  <text x="100" y="172" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-weight="900" font-size="30" fill="#174D51"
+        textLength="120" lengthAdjust="spacingAndGlyphs">POLPO</text>
+</svg>

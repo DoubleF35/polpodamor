@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Polpo d'Amor — roundel ricostruito in vettoriale -->
+  <circle cx="100" cy="100" r="98" fill="#EDE5D2"/>
+
+  <!-- polpo -->
+  <g>
+    <path fill="#D5402E" d="M100 18c24 0 40 18 40 42 0 18-10 30-24 35H84c-14-5-24-17-24-35 0-24 16-42 40-42Z"/>
+    <g fill="none" stroke="#D5402E" stroke-linecap="round">
+      <path stroke-width="11" d="M70 88C56 100 44 106 36 100c-6-5-2-14 6-12 4 1 4 6 0 7"/>
+      <path stroke-width="11" d="M130 88c14 12 26 18 34 12 6-5 2-14-6-12-4 1-4 6 0 7"/>
+      <path stroke-width="10" d="M84 94c-4 14-12 22-22 20-7-2-6-11 1-10"/>
+      <path stroke-width="10" d="M116 94c4 14 12 22 22 20 7-2 6-11-1-10"/>
+      <path stroke-width="10" d="M100 96c1 10-1 16 0 22"/>
+    </g>
+    <ellipse cx="86" cy="62" rx="9.5" ry="11" fill="#F5F1F1"/>
+    <ellipse cx="114" cy="62" rx="9.5" ry="11" fill="#F5F1F1"/>
+    <circle cx="86" cy="66" r="4.2" fill="#20272B"/>
+    <circle cx="114" cy="66" r="4.2" fill="#20272B"/>
+  </g>
+
+  <!-- lettering -->
+  <text x="100" y="130" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-weight="900" font-size="36" fill="#174D51"
+        textLength="126" lengthAdjust="spacingAndGlyphs">POLPO</text>
+  <text x="100" y="159" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-weight="900" font-size="33" fill="#174D51"
+        textLength="126" lengthAdjust="spacingAndGlyphs">D'AMOR</text>
+
+  <!-- nastro -->
+  <path fill="#B9D3D6" d="M30 166h140l-8 10 8 10H30l8-10-8-10Z"/>
+  <text x="100" y="180.5" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-weight="700" font-size="13" letter-spacing="3.5" fill="#D5402E">OSTERIA</text>
+</svg>
