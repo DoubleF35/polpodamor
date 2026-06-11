@@ -18,6 +18,11 @@
   <link rel="stylesheet" href="css/style.css" />
 
   <script>
+    // Menù del giorno: incolla qui l'URL del Worker Cloudflare quando è attivo,
+    // es. 'https://menu-polpodamor.TUONOME.workers.dev' (vedi worker/ISTRUZIONI.md).
+    // Finché resta vuoto, il riquadro "menù di oggi" semplicemente non compare.
+    window.MENU_API = window.MENU_API || '';
+
     document.documentElement.classList.replace('no-js', 'js');
     // Rete di sicurezza: se il bundle non parte, la pagina resta comunque visibile.
     window.addEventListener('load', function () {
@@ -232,6 +237,15 @@
             <p class="eyebrow" data-reveal><span class="eyebrow__star">✺</span> Il menù</p>
             <h2 data-reveal>Quello che il mercato<br /><em>ci suggerisce</em></h2>
             <p class="menu__note" data-reveal>Il menù cambia ogni settimana, secondo il banco di Porta Palazzo e l'umore del polpo. Questi sono i classici che non ci lasciano mai.</p>
+          </div>
+
+          <div class="menu__today" id="menu-today" hidden>
+            <span class="menu__today-badge">Oggi ✺</span>
+            <div class="menu__today-txt">
+              <h3>Il menù del giorno</h3>
+              <p id="menu-today-date">appena sfornato dalla cucina</p>
+            </div>
+            <a class="btn btn--red btn--magnetic" id="menu-today-link" href="#" target="_blank" rel="noopener">Apri il PDF</a>
           </div>
 
           <div class="menu__grid">
